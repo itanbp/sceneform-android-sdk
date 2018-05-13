@@ -15,6 +15,7 @@
  */
 package com.google.ar.sceneform.samples.hellosceneform;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -52,7 +53,7 @@ public class HelloSceneformActivity extends AppCompatActivity {
     // When you build a Renderable, Sceneform loads its resources in the background while returning
     // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
     ModelRenderable.builder()
-        .setSource(this, R.raw.andy)
+        .setSource(this, Uri.parse("andy.sfb"))
         .build()
         .thenAccept(renderable -> andyRenderable = renderable)
         .exceptionally(
