@@ -1,16 +1,16 @@
 {
    materials: [
       {
-         name: "lambert2SG",
+         name: "Cube",
          parameters: [
             {
-               baseColor: "Octopus_BaseColor",
+               baseColor: "submarineSurface_Color",
             },
             {
                baseColorTint: [
-                  0.5,
-                  0.5,
-                  0.5,
+                  0.80000000000000004,
+                  0.80000000000000004,
+                  0.80000000000000004,
                   1,
                ],
             },
@@ -33,9 +33,9 @@
          "TexCoord",
          "Orientation",
       ],
-      file: "sampledata/models/Octopus.obj",
-      name: "Octopus",
-      scale: 0.039225999999999995,
+      file: "sampledata/models/CUPIC_SUBMARINE.obj",
+      name: "CUPIC_SUBMARINE",
+      scale: 0.0073330000000000001,
       suggested_collision: {
          center: {
             x: 0,
@@ -52,9 +52,9 @@
    },
    samplers: [
       {
-         file: "sampledata/models\\Octopus_BaseColor.png",
-         name: "Octopus_BaseColor",
-         pipeline_name: "Octopus_BaseColor.png",
+         file: "sampledata/models\\submarineSurface_Color.png",
+         name: "submarineSurface_Color",
+         pipeline_name: "submarineSurface_Color.png",
       },
    ],
    version: "0.51:1",

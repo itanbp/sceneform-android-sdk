@@ -70,3 +70,18 @@ sceneform.asset('sampledata/models/Octopus.obj',
         'default',
         'sampledata/models/Octopus.sfa',
         'src/main/assets/Octopus')
+
+sceneform.asset('sampledata/models/CUPIC_SUBMARINE.obj',
+        'default',
+        'sampledata/models/CUPIC_SUBMARINE.sfa',
+        'src/main/assets/CUPIC_SUBMARINE')
+
+sceneform.asset('sampledata/models/494 Cups.obj',
+        'default',
+        'sampledata/models/494 Cups.sfa',
+        'src/main/assets/494 Cups')
+
+sceneform.asset('sampledata/models/Cup_01(1).obj',
+        'default',
+        'sampledata/models/Cup_01(1).sfa',
+        'src/main/assets/Cup_01(1)')

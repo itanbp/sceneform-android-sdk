@@ -1,16 +1,16 @@
 {
    materials: [
       {
-         name: "lambert2SG",
+         name: "blinn8SG",
          parameters: [
             {
-               baseColor: "Octopus_BaseColor",
+               baseColor: null,
             },
             {
                baseColorTint: [
-                  0.5,
-                  0.5,
-                  0.5,
+                  0.87,
+                  0.12,
+                  0.28999999999999998,
                   1,
                ],
             },
@@ -33,9 +33,10 @@
          "TexCoord",
          "Orientation",
       ],
-      file: "sampledata/models/Octopus.obj",
-      name: "Octopus",
-      scale: 0.039225999999999995,
+      file: "sampledata/models/Cup_01(1).obj",
+      name: "Cup_01(1)",
+      scale: 0.0078969999999999995,
+      recenter: true,
       suggested_collision: {
          center: {
             x: 0,
@@ -50,12 +51,5 @@
          type: "Box",
       },
    },
-   samplers: [
-      {
-         file: "sampledata/models\\Octopus_BaseColor.png",
-         name: "Octopus_BaseColor",
-         pipeline_name: "Octopus_BaseColor.png",
-      },
-   ],
    version: "0.51:1",
 }
