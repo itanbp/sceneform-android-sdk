@@ -53,7 +53,7 @@ public class HelloSceneformActivity extends AppCompatActivity {
     // When you build a Renderable, Sceneform loads its resources in the background while returning
     // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
     ModelRenderable.builder()
-        .setSource(this, Uri.parse("andy.sfb"))
+        .setSource(this, Uri.parse("Octopus.sfb"))
         .build()
         .thenAccept(renderable -> andyRenderable = renderable)
         .exceptionally(
