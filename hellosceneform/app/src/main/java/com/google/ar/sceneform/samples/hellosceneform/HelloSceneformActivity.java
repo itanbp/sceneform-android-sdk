@@ -79,12 +79,15 @@ public class HelloSceneformActivity extends AppCompatActivity {
           Anchor anchor = hitResult.createAnchor();
           AnchorNode anchorNode = new AnchorNode(anchor);
           anchorNode.setParent(arFragment.getArSceneView().getScene());
+          anchorNode.setRenderable(andyRenderable); // in this approach the Node isn't transformable (drag, scale, rotate)
 
+          /*
           // Create the transformable andy and add it to the anchor.
           TransformableNode andy = new TransformableNode(arFragment.getTransformationSystem());
           andy.setParent(anchorNode);
           andy.setRenderable(andyRenderable);
           andy.select();
+          */
         });
   }
 }
