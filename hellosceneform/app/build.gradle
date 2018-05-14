@@ -85,3 +85,8 @@ sceneform.asset('sampledata/models/Cup_01(1).obj',
         'default',
         'sampledata/models/Cup_01(1).sfa',
         'src/main/assets/Cup_01(1)')
+
+sceneform.asset('sampledata/models/Octopus_eyes.fbx',
+        'default',
+        'sampledata/models/Octopus_eyes.sfa',
+        'src/main/assets/Octopus_eyes')

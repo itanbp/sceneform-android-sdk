@@ -28,6 +28,7 @@ import com.google.ar.core.Plane.Type;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
+import com.google.ar.sceneform.ux.ScaleController;
 import com.google.ar.sceneform.ux.TransformableNode;
 
 /**
@@ -53,7 +54,7 @@ public class HelloSceneformActivity extends AppCompatActivity {
     // When you build a Renderable, Sceneform loads its resources in the background while returning
     // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
     ModelRenderable.builder()
-        .setSource(this, Uri.parse("Octopus.sfb"))
+        .setSource(this, Uri.parse("Octopus_eyes.sfb"))
         .build()
         .thenAccept(renderable -> andyRenderable = renderable)
         .exceptionally(
@@ -79,15 +80,16 @@ public class HelloSceneformActivity extends AppCompatActivity {
           Anchor anchor = hitResult.createAnchor();
           AnchorNode anchorNode = new AnchorNode(anchor);
           anchorNode.setParent(arFragment.getArSceneView().getScene());
-          anchorNode.setRenderable(andyRenderable); // in this approach the Node isn't transformable (drag, scale, rotate)
 
-          /*
           // Create the transformable andy and add it to the anchor.
           TransformableNode andy = new TransformableNode(arFragment.getTransformationSystem());
           andy.setParent(anchorNode);
+          ScaleController scaleController = andy.getScaleController();
+          scaleController.setMaxScale(3f);
+          scaleController.setElasticity(1f);
           andy.setRenderable(andyRenderable);
           andy.select();
-          */
+
         });
   }
 }
