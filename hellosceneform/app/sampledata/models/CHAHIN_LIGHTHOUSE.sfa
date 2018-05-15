@@ -1,24 +1,24 @@
 {
    materials: [
       {
-         name: "blinn8SG",
+         name: "Material.004",
          parameters: [
             {
-               baseColor: null,
+               baseColor: "CHAHIN_LIGHTHOUSE_TEXTURE",
             },
             {
                baseColorTint: [
-                  0.87,
-                  0.12,
-                  0.28999999999999998,
+                  0.64000000000000001,
+                  0.64000000000000001,
+                  0.64000000000000001,
                   1,
                ],
             },
             {
-               metallic: 0,
+               metallic: 1,
             },
             {
-               roughness: 1,
+               roughness: 0.14280000000000001,
             },
             {
                opacity: null,
@@ -33,10 +33,9 @@
          "TexCoord",
          "Orientation",
       ],
-      file: "sampledata/models/Cup_01(1).obj",
-      name: "Cup_01(1)",
-      scale: 0.0078969999999999995,
-      recenter: true,
+      file: "sampledata/models/CHAHIN_LIGHTHOUSE.obj",
+      name: "CHAHIN_LIGHTHOUSE",
+      scale: 0.107888,
       suggested_collision: {
          center: {
             x: 0,
@@ -51,5 +50,12 @@
          type: "Box",
       },
    },
+   samplers: [
+      {
+         file: "sampledata/models\\CHAHIN_LIGHTHOUSE_TEXTURE.jpg",
+         name: "CHAHIN_LIGHTHOUSE_TEXTURE",
+         pipeline_name: "CHAHIN_LIGHTHOUSE_TEXTURE.jpg",
+      },
+   ],
    version: "0.51:1",
 }

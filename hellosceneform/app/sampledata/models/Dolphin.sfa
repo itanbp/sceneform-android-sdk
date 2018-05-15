@@ -1,0 +1,61 @@
+{
+   materials: [
+      {
+         name: "Dolphin_mat",
+         parameters: [
+            {
+               baseColor: "Dolphin_BaseColor",
+            },
+            {
+               baseColorTint: [
+                  0.5,
+                  0.5,
+                  0.5,
+                  1,
+               ],
+            },
+            {
+               metallic: 0,
+            },
+            {
+               roughness: 1,
+            },
+            {
+               opacity: null,
+            },
+         ],
+         source: "build/sceneform_sdk/default_materials/obj_material.sfm",
+      },
+   ],
+   model: {
+      attributes: [
+         "Position",
+         "TexCoord",
+         "Orientation",
+      ],
+      file: "sampledata/models/Dolphin.obj",
+      name: "Dolphin",
+      scale: 0.17771600000000001,
+      suggested_collision: {
+         center: {
+            x: 0,
+            y: 0,
+            z: 0,
+         },
+         size: {
+            x: 1,
+            y: 1,
+            z: 1,
+         },
+         type: "Box",
+      },
+   },
+   samplers: [
+      {
+         file: "sampledata/models\\Dolphin_BaseColor.png",
+         name: "Dolphin_BaseColor",
+         pipeline_name: "Dolphin_BaseColor.png",
+      },
+   ],
+   version: "0.51:1",
+}

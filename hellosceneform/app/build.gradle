@@ -81,12 +81,33 @@ sceneform.asset('sampledata/models/494 Cups.obj',
         'sampledata/models/494 Cups.sfa',
         'src/main/assets/494 Cups')
 
-sceneform.asset('sampledata/models/Cup_01(1).obj',
-        'default',
-        'sampledata/models/Cup_01(1).sfa',
-        'src/main/assets/Cup_01(1)')
 
 sceneform.asset('sampledata/models/Octopus_eyes.fbx',
         'default',
         'sampledata/models/Octopus_eyes.sfa',
         'src/main/assets/Octopus_eyes')
+
+sceneform.asset('sampledata/models/Tablet.obj',
+        'default',
+        'sampledata/models/Tablet.sfa',
+        'src/main/assets/Tablet')
+
+sceneform.asset('sampledata/models/Dolphin.obj',
+        'default',
+        'sampledata/models/Dolphin.sfa',
+        'src/main/assets/Dolphin')
+
+sceneform.asset('sampledata/models/CHAHIN_LIGHTHOUSE.obj',
+        'default',
+        'sampledata/models/CHAHIN_LIGHTHOUSE.sfa',
+        'src/main/assets/CHAHIN_LIGHTHOUSE')
+
+sceneform.asset('sampledata/models/SeaLion.obj',
+        'default',
+        'sampledata/models/SeaLion.sfa',
+        'src/main/assets/SeaLion')
+
+sceneform.asset('sampledata/models/Laptop_01.obj',
+        'default',
+        'sampledata/models/Laptop_01.sfa',
+        'src/main/assets/Laptop_01')

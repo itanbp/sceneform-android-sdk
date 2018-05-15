@@ -65,7 +65,7 @@ public class HelloSceneformActivity extends AppCompatActivity {
         // When you build a Renderable, Sceneform loads its resources in the background while returning
         // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
         ModelRenderable.builder()
-                .setSource(this, Uri.parse("Octopus.sfb"))
+                .setSource(this, Uri.parse("Tablet.sfb"))
                 .build()
                 .thenAccept(renderable -> andyRenderable = renderable)
                 .exceptionally(
@@ -91,62 +91,12 @@ public class HelloSceneformActivity extends AppCompatActivity {
                     Anchor anchor = hitResult.createAnchor();
                     anchorNode = new AnchorNode(anchor);
                     anchorNode.setParent(arFragment.getArSceneView().getScene());
-
-                    // Create the transformable andy and add it to the anchor.
-            /*
-            transformableNode = new TransformableNode(arFragment.getTransformationSystem());
-            transformableNode.setParent(anchorNode);
-            ScaleController scaleController = transformableNode.getScaleController();
-            scaleController.setMaxScale(3f);
-            scaleController.setElasticity(1f);
-            transformableNode.setRenderable(andyRenderable);
-            transformableNode.select();
-            */
                     anchorNode.setRenderable(andyRenderable);
+                    anchorNode.setLocalScale(new Vector3(0.3f, 0.3f, 0.3f));
 
                 });
 
 
-        arFragment.getArSceneView().getScene().setOnUpdateListener(new Scene.OnUpdateListener() {
-            @Override
-            public void onUpdate(FrameTime frameTime) {
-
-                // Let the fragment update its state first.
-                arFragment.onUpdate(frameTime);
-
-                // If there is no frame then don't process anything.
-                if (arFragment.getArSceneView().getArFrame() == null) {
-                    return;
-                }
-
-                // If ARCore is not tracking yet, then don't process anything.
-                if (arFragment.getArSceneView().getArFrame().getCamera().getTrackingState() != TrackingState.TRACKING) {
-                    return;
-                }
-
-                if (index == 0) {
-                    prevTime = frameTime.getStartSeconds();
-                    index++;
-                }
-
-
-                if (anchorNode != null && frameTime.getStartSeconds() - prevTime > 0.3f) {
-
-                    float fraction = index % 100;
-                    fraction = fraction / 100;
-                    index++;
-
-                    prevTime = frameTime.getStartSeconds();
-
-                    Vector3Evaluator evaluator = new Vector3Evaluator();
-                    Vector3 animationVector = evaluator.evaluate(fraction, new Vector3(1, 1, 1), new Vector3(4, 4, 4));
-                    anchorNode.setLocalScale(animationVector);
-
-                    Log.v("MOTEK", "animationVector");
-                }
-
-            }
-        });
 
     }
 }
