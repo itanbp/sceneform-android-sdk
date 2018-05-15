@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.widget.Toast;
+
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
@@ -41,57 +42,57 @@ import com.google.ar.sceneform.ux.TransformableNode;
  * This is an example activity that uses the Sceneform UX package to make common AR tasks easier.
  */
 public class HelloSceneformActivity extends AppCompatActivity {
-  private static final String TAG = HelloSceneformActivity.class.getSimpleName();
+    private static final String TAG = HelloSceneformActivity.class.getSimpleName();
 
-  private ArFragment arFragment;
-  private ModelRenderable andyRenderable;
-  //private TransformableNode transformableNode;
-  private AnchorNode anchorNode;
-  private float prevTime = -1;
-  private int index = 0;
+    private ArFragment arFragment;
+    private ModelRenderable andyRenderable;
+    //private TransformableNode transformableNode;
+    private AnchorNode anchorNode;
+    private float prevTime = -1;
+    private int index = 0;
 
-  @Override
-  @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
-  // CompletableFuture requires api level 24
-  // FutureReturnValueIgnored is not valid
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+    @Override
+    @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
+    // CompletableFuture requires api level 24
+    // FutureReturnValueIgnored is not valid
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    setContentView(R.layout.activity_ux);
+        setContentView(R.layout.activity_ux);
 
-    arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
+        arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
 
-    // When you build a Renderable, Sceneform loads its resources in the background while returning
-    // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
-    ModelRenderable.builder()
-        .setSource(this, Uri.parse("Octopus.sfb"))
-        .build()
-        .thenAccept(renderable -> andyRenderable = renderable)
-        .exceptionally(
-            throwable -> {
-              Toast toast =
-                  Toast.makeText(this, "Unable to load andy renderable", Toast.LENGTH_LONG);
-              toast.setGravity(Gravity.CENTER, 0, 0);
-              toast.show();
-              return null;
-            });
+        // When you build a Renderable, Sceneform loads its resources in the background while returning
+        // a CompletableFuture. Call thenAccept(), handle(), or check isDone() before calling get().
+        ModelRenderable.builder()
+                .setSource(this, Uri.parse("Octopus.sfb"))
+                .build()
+                .thenAccept(renderable -> andyRenderable = renderable)
+                .exceptionally(
+                        throwable -> {
+                            Toast toast =
+                                    Toast.makeText(this, "Unable to load andy renderable", Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                            return null;
+                        });
 
-    arFragment.setOnTapArPlaneListener(
-        (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
-          if (andyRenderable == null) {
-            return;
-          }
+        arFragment.setOnTapArPlaneListener(
+                (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
+                    if (andyRenderable == null) {
+                        return;
+                    }
 
-          if (plane.getType() != Type.HORIZONTAL_UPWARD_FACING) {
-            return;
-          }
+                    if (plane.getType() != Type.HORIZONTAL_UPWARD_FACING) {
+                        return;
+                    }
 
-          // Create the Anchor.
-          Anchor anchor = hitResult.createAnchor();
-            anchorNode = new AnchorNode(anchor);
-          anchorNode.setParent(arFragment.getArSceneView().getScene());
+                    // Create the Anchor.
+                    Anchor anchor = hitResult.createAnchor();
+                    anchorNode = new AnchorNode(anchor);
+                    anchorNode.setParent(arFragment.getArSceneView().getScene());
 
-          // Create the transformable andy and add it to the anchor.
+                    // Create the transformable andy and add it to the anchor.
             /*
             transformableNode = new TransformableNode(arFragment.getTransformationSystem());
             transformableNode.setParent(anchorNode);
@@ -101,52 +102,51 @@ public class HelloSceneformActivity extends AppCompatActivity {
             transformableNode.setRenderable(andyRenderable);
             transformableNode.select();
             */
-            anchorNode.setRenderable(andyRenderable);
+                    anchorNode.setRenderable(andyRenderable);
 
+                });
+
+
+        arFragment.getArSceneView().getScene().setOnUpdateListener(new Scene.OnUpdateListener() {
+            @Override
+            public void onUpdate(FrameTime frameTime) {
+
+                // Let the fragment update its state first.
+                arFragment.onUpdate(frameTime);
+
+                // If there is no frame then don't process anything.
+                if (arFragment.getArSceneView().getArFrame() == null) {
+                    return;
+                }
+
+                // If ARCore is not tracking yet, then don't process anything.
+                if (arFragment.getArSceneView().getArFrame().getCamera().getTrackingState() != TrackingState.TRACKING) {
+                    return;
+                }
+
+                if (index == 0) {
+                    prevTime = frameTime.getStartSeconds();
+                    index++;
+                }
+
+
+                if (anchorNode != null && frameTime.getStartSeconds() - prevTime > 0.3f) {
+
+                    float fraction = index % 100;
+                    fraction = fraction / 100;
+                    index++;
+
+                    prevTime = frameTime.getStartSeconds();
+
+                    Vector3Evaluator evaluator = new Vector3Evaluator();
+                    Vector3 animationVector = evaluator.evaluate(fraction, new Vector3(1, 1, 1), new Vector3(4, 4, 4));
+                    anchorNode.setLocalScale(animationVector);
+
+                    Log.v("MOTEK", "animationVector");
+                }
+
+            }
         });
 
-
-
-    arFragment.getArSceneView().getScene().setOnUpdateListener(new Scene.OnUpdateListener() {
-        @Override
-        public void onUpdate(FrameTime frameTime) {
-
-            // Let the fragment update its state first.
-            arFragment.onUpdate(frameTime);
-
-            // If there is no frame then don't process anything.
-            if (arFragment.getArSceneView().getArFrame() == null) {
-                return;
-            }
-
-            // If ARCore is not tracking yet, then don't process anything.
-            if (arFragment.getArSceneView().getArFrame().getCamera().getTrackingState() != TrackingState.TRACKING) {
-                return;
-            }
-
-            if (index == 0) {
-                prevTime = frameTime.getStartSeconds();
-                index++;
-            }
-
-
-            if (anchorNode != null && frameTime.getStartSeconds() - prevTime > 0.3f) {
-
-                float fraction = index % 100;
-                fraction = fraction / 100;
-                index++;
-
-                prevTime = frameTime.getStartSeconds();
-
-                Vector3Evaluator evaluator = new Vector3Evaluator();
-                Vector3 animationVector = evaluator.evaluate(fraction, new Vector3(1,1,1), new Vector3(4,4,4));
-                anchorNode.setLocalScale(animationVector);
-
-                Log.v("MOTEK", "animationVector");
-            }
-
-        }
-    });
-
-  }
+    }
 }
