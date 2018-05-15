@@ -344,10 +344,17 @@ public class SolarActivity extends AppCompatActivity {
         sun.setParent(base);
         sun.setLocalPosition(new Vector3(0.0f, 0.5f, 0.0f));
 
+        sun.setLocalScale(new Vector3(0.5f, 0.5f, 0.5f));
+        sun.setRenderable(sunRenderable);
+
+        
+        /*
         Node sunVisual = new Node();
         sunVisual.setParent(sun);
         sunVisual.setRenderable(sunRenderable);
         sunVisual.setLocalScale(new Vector3(0.5f, 0.5f, 0.5f));
+        */
+
 
         Node solarControls = new Node();
         solarControls.setParent(sun);
@@ -394,8 +401,8 @@ public class SolarActivity extends AppCompatActivity {
                 });
 
         // Toggle the solar controls on and off by tapping the sun.
-        sunVisual.setOnTapListener(
-                (hitTestResult, motionEvent) -> solarControls.setEnabled(!solarControls.isEnabled()));
+        sun.setOnTapListener((hitTestResult, motionEvent) -> solarControls.setEnabled(!solarControls.isEnabled()));
+        //sunVisual.setOnTapListener((hitTestResult, motionEvent) -> solarControls.setEnabled(!solarControls.isEnabled()));
 
         createPlanet("Mercury", sun, 0.4f, 47f, mercuryRenderable, 0.019f);
 
