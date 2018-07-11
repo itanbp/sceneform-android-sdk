@@ -26,7 +26,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.SeekBar;
 import android.widget.Toast;
-
 import com.google.ar.core.Anchor;
 import com.google.ar.core.Frame;
 import com.google.ar.core.HitResult;
@@ -43,7 +42,6 @@ import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.ViewRenderable;
-
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -88,6 +86,12 @@ public class SolarActivity extends AppCompatActivity {
     // CompletableFuture requires api level 24
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!DemoUtils.checkIsSupportedDeviceOrFinish(this)) {
+            // Not a supported device.
+            return;
+        }
+
         setContentView(R.layout.activity_solar);
         arSceneView = findViewById(R.id.ar_scene_view);
 
@@ -228,6 +232,9 @@ public class SolarActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (arSceneView == null) {
+            return;
+        }
 
         if (arSceneView.getSession() == null) {
             // If the session wasn't created yet, don't resume rendering.
@@ -261,13 +268,17 @@ public class SolarActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        arSceneView.pause();
+        if (arSceneView != null) {
+            arSceneView.pause();
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        arSceneView.destroy();
+        if (arSceneView != null) {
+            arSceneView.destroy();
+        }
     }
 
     @Override
@@ -344,17 +355,10 @@ public class SolarActivity extends AppCompatActivity {
         sun.setParent(base);
         sun.setLocalPosition(new Vector3(0.0f, 0.5f, 0.0f));
 
-        sun.setLocalScale(new Vector3(0.5f, 0.5f, 0.5f));
-        sun.setRenderable(sunRenderable);
-
-        
-        /*
         Node sunVisual = new Node();
         sunVisual.setParent(sun);
         sunVisual.setRenderable(sunRenderable);
         sunVisual.setLocalScale(new Vector3(0.5f, 0.5f, 0.5f));
-        */
-
 
         Node solarControls = new Node();
         solarControls.setParent(sun);
@@ -373,12 +377,10 @@ public class SolarActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-                    }
+                    public void onStartTrackingTouch(SeekBar seekBar) {}
 
                     @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
-                    }
+                    public void onStopTrackingTouch(SeekBar seekBar) {}
                 });
 
         SeekBar rotationSpeedBar = solarControlsView.findViewById(R.id.rotationSpeedBar);
@@ -392,17 +394,15 @@ public class SolarActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-                    }
+                    public void onStartTrackingTouch(SeekBar seekBar) {}
 
                     @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
-                    }
+                    public void onStopTrackingTouch(SeekBar seekBar) {}
                 });
 
         // Toggle the solar controls on and off by tapping the sun.
-        sun.setOnTapListener((hitTestResult, motionEvent) -> solarControls.setEnabled(!solarControls.isEnabled()));
-        //sunVisual.setOnTapListener((hitTestResult, motionEvent) -> solarControls.setEnabled(!solarControls.isEnabled()));
+        sunVisual.setOnTapListener(
+                (hitTestResult, motionEvent) -> solarControls.setEnabled(!solarControls.isEnabled()));
 
         createPlanet("Mercury", sun, 0.4f, 47f, mercuryRenderable, 0.019f);
 
